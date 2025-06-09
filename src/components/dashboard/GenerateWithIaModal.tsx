@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { generateProjectFromPrompt } from "~/app/api/ia-services/iaServices";
+import { generateProjectFromPrompt, generateProjectFromImage } from "~/app/api/ia-services/iaServices";
 import { createRoomWithIa } from "~/app/actions/rooms";
 import { useRouter } from "next/navigation";
 
@@ -31,7 +31,8 @@ export default function GenerateWithIaModal({ onClose }: { onClose: () => void }
         const fn = await generateProjectFromPrompt(prompt); // llama al servicio
         setFilename(fn.filename)
       } else {
-        // Aquí eventualmente irá: await generateProjectFromImage(image);
+        const fn = await generateProjectFromImage(image!);
+        setFilename(fn.filename)
       }
       setSuccess(true);
     } catch (e) {

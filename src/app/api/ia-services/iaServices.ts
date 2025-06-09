@@ -17,6 +17,25 @@ export async function generateProjectFromPrompt(prompt: string, token?: string) 
   return await response.json(); // { filename: string, status: "ok" }
 }
 
+export async function generateProjectFromImage(file: File, token?: string) {
+    const formData = new FormData();
+    formData.append("file", file);
+    if (token) {
+        formData.append("token", token);
+    }
+
+    const response = await fetch(`${BASE_URL}/image`, {
+        method: "POST",
+        body: formData,
+    });
+
+    if (!response.ok) {
+        throw new Error("Error al generar proyecto desde imagen");
+    }
+
+    return await response.json(); // { filename: string, status: "ok" }
+}
+
 export async function renameProjectFile(oldFilename: string, newFilename: string) {
   const response = await fetch(`${BASE_URL}/project`, {
     method: "PUT",
