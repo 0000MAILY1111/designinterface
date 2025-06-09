@@ -16,6 +16,7 @@ import Dropdown from "./Dropdown";
 import UserAvatar from "./UserAvatar";
 import { User } from "@prisma/client";
 import ShareMenu from "./ShareMenu";
+import GenerateCode from "./GenerateCode";
 
 export default function Sidebars({
   roomName,
@@ -208,7 +209,7 @@ export default function Sidebars({
         <div
           className={`fixed ${leftIsMinimized && layer ? "bottom-3 right-3 top-3 rounded-xl" : ""} ${!leftIsMinimized && !layer ? "h-screen" : ""} ${!leftIsMinimized && layer ? "bottom-0 top-0 h-screen" : ""} right-0 flex w-[240px] flex-col border-l border-gray-200 bg-white`}
         >
-          <div className="flex items-center justify-between pr-2">
+          <div className="flex items-center justify-between pr-2 gap-1">
             <div className="max-36 flex w-full gap-2 overflow-x-scroll p-3 text-xs">
               {me && (
                 <UserAvatar
@@ -227,6 +228,9 @@ export default function Sidebars({
             <ShareMenu
               roomId={roomId}
               othersWithAccessToRoom={othersWithAccessToRoom}
+            />
+            <GenerateCode
+              roomId={roomId}
             />
           </div>
           <div className="border-b border-gray-200"></div>
@@ -439,6 +443,9 @@ export default function Sidebars({
           <ShareMenu
             roomId={roomId}
             othersWithAccessToRoom={othersWithAccessToRoom}
+          />
+          <GenerateCode
+            roomId={roomId}
           />
         </div>
       )}
