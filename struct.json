@@ -1,0 +1,169 @@
+{
+  "liveblocksType": "LiveObject",
+  "data": {
+    "roomColor": {
+      "r": 67,
+      "g": 67,
+      "b": 67
+    },
+    "layerIds": {
+      "liveblocksType": "LiveList",
+      "data": [
+        "ELIMwb0GxNsODVReeJUfK",
+        "73dNQUbhL2zWpF3lyVT4K",
+        "mrDqJnOy3w3U7LESOtt4X",
+        "zSHmDkbZ3Q1rgO-qXU8KZ",
+        "0XftZH37zRY1h3zvtkdeJ",
+        "WLpLtfNDVyh4E1YESneD-"
+      ]
+    },
+    "layers": {
+      "liveblocksType": "LiveMap",
+      "data": {
+        "WLpLtfNDVyh4E1YESneD-": {
+          "liveblocksType": "LiveObject",
+          "data": {
+            "type": 2,
+            "x": 670,
+            "y": 444,
+            "height": 4,
+            "width": 155,
+            "fill": {
+              "r": 196,
+              "g": 106,
+              "b": 106
+            },
+            "stroke": {
+              "r": 196,
+              "g": 106,
+              "b": 106
+            },
+            "opacity": 100,
+            "points": [
+              [
+                0,
+                0,
+                0.5
+              ],
+              [
+              ]
+            ]
+          }
+        },
+        "zSHmDkbZ3Q1rgO-qXU8KZ": {
+          "liveblocksType": "LiveObject",
+          "data": {
+            "type": 1,
+            "x": 683,
+            "y": 498,
+            "height": 104,
+            "width": 132,
+            "fill": {
+              "r": 217,
+              "g": 217,
+              "b": 217
+            },
+            "stroke": {
+              "r": 196,
+              "g": 64,
+              "b": 64
+            },
+            "opacity": 100
+          }
+        },
+        "73dNQUbhL2zWpF3lyVT4K": {
+          "liveblocksType": "LiveObject",
+          "data": {
+            "type": 3,
+            "x": 677,
+            "y": 689,
+            "height": 30,
+            "width": 100,
+            "fontSize": 10,
+            "text": "password:",
+            "fontWeight": 300,
+            "fontFamily": "Arial",
+            "stroke": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            },
+            "fill": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            },
+            "opacity": 100
+          }
+        },
+        "0XftZH37zRY1h3zvtkdeJ": {
+          "liveblocksType": "LiveObject",
+          "data": {
+            "type": 3,
+            "x": 695,
+            "y": 539,
+            "height": 23,
+            "width": 106,
+            "fontSize": 16,
+            "text": "Iniciar sesion",
+            "fontWeight": 400,
+            "fontFamily": "Inter",
+            "stroke": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            },
+            "fill": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            },
+            "opacity": 100
+          }
+        },
+        "mrDqJnOy3w3U7LESOtt4X": {
+          "liveblocksType": "LiveObject",
+          "data": {
+            "type": 0,
+            "x": 733,
+            "y": 690,
+            "height": 18,
+            "width": 86,
+            "fill": {
+              "r": 217,
+              "g": 217,
+              "b": 217
+            },
+            "stroke": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            },
+            "opacity": 100
+          }
+        },
+        "ELIMwb0GxNsODVReeJUfK": {
+          "liveblocksType": "LiveObject",
+          "data": {
+            "type": 0,
+            "x": 594,
+            "y": 384,
+            "height": 518,
+            "width": 312,
+            "fill": {
+              "r": 217,
+              "g": 217,
+              "b": 217
+            },
+            "stroke": {
+              "r": 217,
+              "g": 217,
+              "b": 217
+            },
+            "opacity": 100
+          }
+        }
+      }
+    }
+  }
+}

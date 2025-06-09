@@ -5,6 +5,7 @@ import { signout } from "../actions/auth";
 import { db } from "~/server/db";
 import UserMenu from "~/components/dashboard/UserMenu";
 import CreateRoom from "~/components/dashboard/CreateRoom";
+import CreateRoomWithIa from "~/components/dashboard/CreateRoomWithIA";
 import RoomsView from "~/components/dashboard/RoomsView";
 
 export default async function Page() {
@@ -31,10 +32,13 @@ export default async function Page() {
       </div>
       <div className="flex h-screen w-full flex-col">
         <div className="flex min-h-[50px] items-center border-b border-gray-200 bg-white pl-8">
-          <h2 className="text-[13px]">Recents</h2>
+          <h2 className="text-[13px]">Recientes</h2>
         </div>
         <div className="flex h-full flex-col gap-10 p-8">
-          <CreateRoom />
+          <div className="flex gap-2">
+            <CreateRoom />
+            <CreateRoomWithIa/>
+          </div>
           <RoomsView
             ownedRooms={user.ownedRooms}
             roomInvites={user.roomInvites.map((x) => x.room)}

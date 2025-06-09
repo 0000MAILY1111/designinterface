@@ -8,6 +8,7 @@ import {
 } from "@liveblocks/react";
 import { ReactNode } from "react";
 import { Layer } from "~/types";
+import { getProjectById } from "~/app/api/ia-services/iaServices";
 
 export function Room({
   children,

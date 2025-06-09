@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "~/server/auth";
 import { db } from "~/server/db";
+import {renameProjectFile, getProjectById} from "~/app/api/ia-services/iaServices"
+import { error } from "console";
 
 export async function createRoom() {
   const session = await auth();
@@ -24,6 +26,32 @@ export async function createRoom() {
   });
 
   redirect("/dashboard/" + room.id);
+}
+export async function createRoomWithIa(filename:string) {
+  const session = await auth();
+
+  if (!session?.user.id) throw new Error("No user id found.");
+
+  const room = await db.room.create({
+    data: {
+      owner: {
+        connect: {
+          id: session.user.id,
+        },
+      },
+    },
+    select: {
+      id: true,
+    },
+  });
+  try{
+    const response = await renameProjectFile(filename, room.id)
+    if (response.status == "ok")
+      redirect("/dashboard/" + room.id);
+  }catch (err){
+    console.error(err)
+  }
+
 }
 
 export async function updateRoomTitle(title: string, id: string) {
