@@ -27,31 +27,27 @@ export async function createRoom() {
 
   redirect("/dashboard/" + room.id);
 }
-export async function createRoomWithIa(filename:string) {
+export async function createRoomWithIa(filename: string) {
   const session = await auth();
-
   if (!session?.user.id) throw new Error("No user id found.");
 
   const room = await db.room.create({
     data: {
       owner: {
-        connect: {
-          id: session.user.id,
-        },
+        connect: { id: session.user.id },
       },
     },
-    select: {
-      id: true,
-    },
+    select: { id: true },
   });
-  try{
-    const response = await renameProjectFile(filename, room.id)
-    if (response.status == "ok")
-      redirect("/dashboard/" + room.id);
-  }catch (err){
-    console.error(err)
+
+  try {
+    const response = await renameProjectFile(filename, room.id);
+    if (response.status === "ok") return room.id;
+  } catch (err) {
+    console.error(err);
   }
 
+  throw new Error("Room creation or file rename failed.");
 }
 
 export async function updateRoomTitle(title: string, id: string) {

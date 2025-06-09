@@ -1,5 +1,5 @@
-"use client";
-const BASE_URL = "http://localhost:8000/api"; // Ajusta esta URL según tu entorno
+
+const BASE_URL = "http://localhost:8000/api/analysis"; // Ajusta esta URL según tu entorno
 
 export async function generateProjectFromPrompt(prompt: string, token?: string) {
   const response = await fetch(`${BASE_URL}/prompt`, {
