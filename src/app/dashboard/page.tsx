@@ -26,7 +26,7 @@ export default async function Page() {
   });
 
   return (
-    <div className="flex h-screen w-full">
+    <div className="flex h-screen w-full overflow-x-scroll">
       <div className="flex h-screen min-w-[264px] flex-col border-r border-gray-200 bg-white p-2">
         <UserMenu email={user.email} />
       </div>

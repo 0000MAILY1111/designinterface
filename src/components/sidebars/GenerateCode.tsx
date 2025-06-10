@@ -2,16 +2,60 @@ import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { LuFileCode2 } from "react-icons/lu";
 import { useStorage } from "@liveblocks/react";
+import { generateFlutterProject } from "~/app/api/ia-services/iaServices";
+import { LiveList, LiveMap, LiveObject } from "@liveblocks/client";
+
+function serializeReadonlyMap(layers: ReadonlyMap<string, any>) {
+  const result: Record<string, any> = {};
+  layers.forEach((value, key) => {
+    result[key] = {
+      liveblocksType: "LiveObject",
+      data: value,
+    };
+  });
+
+  return {
+    liveblocksType: "LiveMap",
+    data: result,
+  };
+}
+
+function serializeReadonlyList<T>(list: readonly T[]) {
+  return {
+    liveblocksType: "LiveList",
+    data: Array.from(list),
+  };
+}
 
 export default function GenerateCode({ roomId }: { roomId: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [fileName, setFileName] = useState("");
   const storage = useStorage((root) => root);
 
-  const handleGenerate = () => {
-    const json = storage;
-    console.log("Generated JSON for project:", json);
-    // Futuro: llamar al servicio de conversión a Flutter + descarga ZIP
+  const handleGenerate = async () => {
+    //const json = storage;
+    const json = {
+      roomColor: storage!.roomColor,
+      layers: serializeReadonlyMap(storage!.layers),
+      layerIds: serializeReadonlyList(storage!.layerIds),
+    };
+    console.log("layers:", json.layers);
+    console.log("layers_storage:", storage!.layers);
+    console.log("Generating Flutter project with data:", json);
+    try {
+      const zipBlob = await generateFlutterProject(fileName, json!);
+      const url = window.URL.createObjectURL(zipBlob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${fileName || "project"}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error generating Flutter project:", error);
+      alert("Error generating Flutter project.");
+    }
   };
 
   return (

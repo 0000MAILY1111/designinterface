@@ -48,6 +48,35 @@ export function parseLiveblocksData(obj: any): any {
   }
 }
 
+function reconstructLiveblocksValue(obj: any): any {
+  if (!obj || typeof obj !== "object" || !obj.liveblocksType) return obj;
+
+  switch (obj.liveblocksType) {
+    case "LiveObject":
+      return new LiveObject(
+        Object.fromEntries(
+          Object.entries(obj.data).map(([key, val]) => [key, reconstructLiveblocksValue(val)])
+        )
+      );
+    case "LiveMap":
+      return new LiveMap(
+        Object.entries(obj.data).map(([key, val]) => [key, reconstructLiveblocksValue(val)])
+      );
+    case "LiveList":
+      return new LiveList(obj.data.map((item: any) => reconstructLiveblocksValue(item)));
+    default:
+      return obj;
+  }
+}
+
+function buildDefaultStorageFromParsed(parsed: any) {
+  return {
+    roomColor: parsed.data.roomColor,
+    layerIds: reconstructLiveblocksValue(parsed.data.layerIds),
+    layers: reconstructLiveblocksValue(parsed.data.layers),
+  };
+}
+
 export function Room({ children, roomId }: RoomProps) {
   const [initialStorage, setInitialStorage] = useState<null | any>(null);
   const [ready, setReady] = useState(false);
@@ -60,16 +89,15 @@ export function Room({ children, roomId }: RoomProps) {
       try {
         const response = await getProjectById(cleanRoomId);
         console.log(response)
-        const data = {
-          roomColor : response.data.roomColor,
-          layerIds : response.data.layerIds,  
-          layers : response.data.layers 
-        }
-        console.log(data)
+        const defaultStorage = buildDefaultStorageFromParsed(response);
+        console.log(defaultStorage)
         if (isMounted) {
-          const parsed = parseLiveblocksData(response);
+          //const parsed = parseLiveblocksData(response); 
+          //const parsed2 = reconstructLiveblocksValue(response); 
+          //console.log("Parsed data:", parsed);
+          //console.log("Reconstructed data:", storage);
           //  setInitialStorage(parsed || null);
-          setInitialStorage(parsed);
+          setInitialStorage(defaultStorage);
           
           // ✅ Eliminar el archivo del backend después de cargar
           await deleteProjectById(cleanRoomId);
@@ -93,7 +121,6 @@ export function Room({ children, roomId }: RoomProps) {
     layers: new LiveMap<string, LiveObject<Layer>>(),
     layerIds: new LiveList([]),
   };
-  console.log(initialStorage)
 
   if (!ready) {
     return (

@@ -1,6 +1,6 @@
 
 const BASE_URL = "http://localhost:8000/api/analysis"; // Ajusta esta URL según tu entorno
-
+const GENERATE_URL = "http://localhost:8000/api/project"; // Ajusta esta URL según tu entorno
 export async function generateProjectFromPrompt(prompt: string, token?: string) {
   const response = await fetch(`${BASE_URL}/prompt`, {
     method: "POST",
@@ -75,4 +75,28 @@ export async function deleteProjectById(id: string) {
   }
 
   return await response.json(); // { message: string }
+}
+
+export async function generateFlutterProject(
+  projectName: string,
+  projectData: any
+): Promise<Blob> {
+  console.log("Generating Flutter project with data:", projectData);
+  const response = await fetch(`${GENERATE_URL}/generate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      project_name: projectName,
+      project_data: projectData,
+    }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.detail?.detail || "Error al generar proyecto Angular");
+  }
+
+  return await response.blob(); // ZIP file
 }
