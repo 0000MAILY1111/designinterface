@@ -4,6 +4,7 @@ import { LuFileCode2 } from "react-icons/lu";
 import { useStorage } from "@liveblocks/react";
 import { generateFlutterProject } from "~/app/api/ia-services/iaServices";
 import { LiveList, LiveMap, LiveObject } from "@liveblocks/client";
+import { set } from "zod";
 
 function serializeReadonlyMap(layers: ReadonlyMap<string, any>) {
   const result: Record<string, any> = {};
@@ -31,9 +32,11 @@ export default function GenerateCode({ roomId }: { roomId: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [fileName, setFileName] = useState("");
   const storage = useStorage((root) => root);
+  const [Loading, setLoading] = useState(false);
 
   const handleGenerate = async () => {
     //const json = storage;
+    setLoading(true);
     const json = {
       roomColor: storage!.roomColor,
       layers: serializeReadonlyMap(storage!.layers),
@@ -55,6 +58,10 @@ export default function GenerateCode({ roomId }: { roomId: string }) {
     } catch (error) {
       console.error("Error generating Flutter project:", error);
       alert("Error generating Flutter project.");
+    }finally {
+      setLoading(false);
+      setIsOpen(false);
+      setFileName("");
     }
   };
 
@@ -86,12 +93,36 @@ export default function GenerateCode({ roomId }: { roomId: string }) {
                 onChange={(e) => setFileName(e.target.value)}
                 className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder:text-gray-500 focus:border-black focus:outline-none"
               />
-              <button
+                <button
                 onClick={handleGenerate}
-                className="w-full rounded-md bg-[#0c8ce9] px-4 py-2 text-sm text-white"
-              >
-                Generar
-              </button>
+                className="w-full rounded-md bg-[#0c8ce9] px-4 py-2 text-sm text-white flex items-center justify-center"
+                disabled={Loading}
+                >
+                {Loading ? (
+                  <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                  </svg>
+                ) : (
+                  "Generar"
+                )}
+                </button>
             </div>
           </div>
         </div>

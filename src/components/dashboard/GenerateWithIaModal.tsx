@@ -15,6 +15,7 @@ export default function GenerateWithIaModal({ onClose }: { onClose: () => void }
   const [success, setSuccess] = useState(false);
   const [filename, setFilename] = useState("")
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -37,6 +38,7 @@ export default function GenerateWithIaModal({ onClose }: { onClose: () => void }
       setSuccess(true);
     } catch (e) {
       console.error("Error:", e);
+      setError("Error al generar el proyecto. Por favor, inténtalo de nuevo.");
     } finally {
       setLoading(false);
     }
@@ -52,7 +54,8 @@ export default function GenerateWithIaModal({ onClose }: { onClose: () => void }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="w-[600px] rounded-lg bg-white p-6 shadow-lg">
+      <div className="w-[600px] rounded-lg bg-white p-6 shadow-lg pb-8">
+        <h2 className="text-lg font-semibold">Generar proyecto con IA</h2>
         <div className="flex justify-between border-b pb-2">
           <div className="flex gap-4">
             <button
@@ -104,7 +107,7 @@ export default function GenerateWithIaModal({ onClose }: { onClose: () => void }
             </div>
           )}
         </div>
-
+          {error && <p className="text-red-500 mt-2">{error}</p>}
         <div className="mt-6 flex justify-end gap-3">
           <button
             className="rounded bg-gray-200 px-4 py-2 hover:bg-gray-300"
