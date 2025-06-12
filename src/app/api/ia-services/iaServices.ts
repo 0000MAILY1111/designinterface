@@ -1,6 +1,6 @@
 
-const BASE_URL = "http://localhost:8000/api/analysis"; // Ajusta esta URL según tu entorno
-const GENERATE_URL = "http://localhost:8000/api/project"; // Ajusta esta URL según tu entorno
+const BASE_URL = "https://flutter-generator-2psw1.onrender.com/api/analysis"; // Ajusta esta URL según tu entorno
+const GENERATE_URL = "https://flutter-generator-2psw1.onrender.com/api/project"; // Ajusta esta URL según tu entorno
 export async function generateProjectFromPrompt(prompt: string, token?: string) {
   const response = await fetch(`${BASE_URL}/prompt`, {
     method: "POST",
